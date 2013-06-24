@@ -5,25 +5,23 @@ It then sets long term caching headers on the resources when rendering them.
 
 Resources can be excluded via Ant-style expressions:
 
-grails.cached.resources.excludes = [
-    "*.png",
-    "**/*.jpg"
-]
+    grails.cached.resources.excludes = [
+        "*.png",
+        "**/*.jpg"
+    ]
 
-Builds on the "Resources" framework plugin 
+Builds on the "Resources" framework plugin
 
 Todos:
 
-* Make the "excludes" option accept closures in addition to Ant-style
-  expressions, so that it can be determined at runtime. For example:
+* Improve the "excludes" option to accept closures in addition to Ant-style
+  expressions. For example:
 
-  cached.resources.excludes = [
-	  '*.pdf',
-	  'assets/',
-	  { uri ->
-	  	  return !uri.startsWith('catalogue')
-	  }
-  ]
-
-
+    grails.cached.resources.excludes = [
+        '*.pdf',
+        'assets/',
+        { uri ->
+            return !uri.startsWith('catalogue')
+        }
+    ]
 
