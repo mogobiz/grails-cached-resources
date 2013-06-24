@@ -3,32 +3,44 @@ package org.grails.plugin.cachedresources
 import org.codehaus.groovy.grails.plugins.codecs.SHA256BytesCodec
 import org.grails.plugin.cachedresources.util.Base62
 import org.grails.plugin.resource.mapper.MapperPhase
+import org.springframework.util.AntPathMatcher
 
 class HashAndCacheResourceMapper {
-
     static phase = MapperPhase.RENAMING
-    
+
+    static PATH_MATCHER = new AntPathMatcher()
+
     def cacheHeadersService
-    
     def resourceService
+    def grailsApplication
     
     /**
      * Rename the file to a hash of it's contents, and set caching headers 
      */
     def map(resource, config) {
-        if (log.debugEnabled) {
-            log.debug "Hashing resources to unique names..."
-        }
+        def excluded = getConfig().excludes?.find { pattern -> PATH_MATCHER.match(pattern, resource.processedFile.name) }
 
-        resource.processedFile = renameToHashOfContents(resource.processedFile, resource.processedFileExtension)
-        resource.updateActualUrlFromProcessedFile()
-        
-        // Do all the horrible cache header stuff
-        resource.requestProcessors << { req, resp ->
+        if (excluded) {
             if (log.debugEnabled) {
-                log.debug "Setting caching headers on ${req.requestURI}"
+                log.debug "Not hashing or applying cache headers on ${resource.processedFile.name} because it was excluded by config"
             }
-            cacheHeadersService.cache resp, [neverExpires: true, shared: true]
+        } else {
+            def originalName = resource.processedFile.name
+
+            resource.processedFile = renameToHashOfContents(resource.processedFile, resource.processedFileExtension)
+            resource.updateActualUrlFromProcessedFile()
+
+            if (log.debugEnabled) {
+                log.debug "Hashing resource ${originalName} to ${resource.processedFile.name}"
+            }
+
+            // Do all the horrible cache header stuff
+            resource.requestProcessors << { req, resp ->
+                if (log.debugEnabled) {
+                    log.debug "Setting caching headers on ${req.requestURI}"
+                }
+                cacheHeadersService.cache resp, [neverExpires: true, shared: true]
+            }
         }
     }
     
@@ -36,7 +48,7 @@ class HashAndCacheResourceMapper {
      * Returns the config object under 'grails.resources'
      */
     ConfigObject getConfig() {
-        grailsApplication.config.cached.resources
+        grailsApplication.config.grails.cached.resources
     }
 
     /**
