@@ -24,6 +24,9 @@ log4j = {
 grails.resources.adhoc.patterns = ["/images/*", "*.css", "*.js"].asImmutable()
 grails.cached.resources.flatten = false
 grails.cached.resources.shortlinks = false
+grails.cached.resources.excludes = [
+    // Add Ant-style exclude patterns here
+]
 
 environments {
     development {

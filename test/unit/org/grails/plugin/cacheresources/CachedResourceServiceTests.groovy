@@ -1,17 +1,12 @@
 package org.grails.plugin.cacheresources
 
-import grails.test.*
-
-class CachedResourceServiceTests extends GrailsUnitTestCase {
-    protected void setUp() {
-        super.setUp()
+class CachedResourceServiceTests {
+    public void setUp() {
     }
 
-    protected void tearDown() {
-        super.tearDown()
+    public void tearDown() {
     }
 
-    void testSomething() {
-
+    public void testSomething() {
     }
 }
