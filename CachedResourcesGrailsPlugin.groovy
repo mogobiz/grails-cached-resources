@@ -12,8 +12,8 @@ class CachedResourcesGrailsPlugin {
             "web-app/js/**/*.*"
     ]
 
-    def author = "Marc Palmer"
-    def authorEmail = "marc@grailsrocks.com"
+    def developers = [ [name: "Marc Palmer", email: "marc@grailsrocks.com"] ]
+    
     def title = "Cached Resources"
     def description = '''\\
 Makes static resources browser-cacheable with unique filenames based on their content
