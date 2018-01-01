@@ -1,12 +1,14 @@
 package org.grails.plugin.cacheresources
 
-import com.grailsrocks.cacheheaders.CacheHeadersService
+import grails.plugins.cacheheaders.CacheHeadersService
 import grails.test.mixin.TestFor
 import org.grails.plugin.cachedresources.HashAndCacheResourceMapper
 import org.grails.plugin.resource.ResourceMeta
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+
+import static org.junit.Assert.*
 
 @TestFor(CacheHeadersService)
 class HashAndCacheResourceMapperTests {

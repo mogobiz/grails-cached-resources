@@ -1,15 +1,16 @@
-class CachedResourcesGrailsPlugin {
-    def version = "1.2"
+package grails.plugins.cachedresources
 
-    def grailsVersion = "1.2 > *"
+class CachedResourcesGrailsPlugin {
+
+    def grailsVersion = "3.0 > *"
     // the other plugins this plugin depends on
     def loadAfter = ['resources']
     
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
             "grails-app/views/error.gsp",
-            "web-app/css/**/*.*",
-            "web-app/js/**/*.*"
+            "src/main/webapp/css/**/*.*",
+            "src/main/webapp/js/**/*.*"
     ]
 
     def developers = [ [name: "Marc Palmer", email: "marc@grailsrocks.com"] ]

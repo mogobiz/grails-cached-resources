@@ -1,10 +1,13 @@
 package org.grails.plugin.cachedresources
 
-import org.codehaus.groovy.grails.plugins.codecs.SHA256BytesCodec
+import org.grails.plugins.codecs.SHA256BytesCodec
 import org.grails.plugin.cachedresources.util.Base62
 import org.grails.plugin.resource.mapper.MapperPhase
 import org.springframework.util.AntPathMatcher
 
+import groovy.util.logging.Log4j
+
+@Log4j
 class HashAndCacheResourceMapper {
     static phase = MapperPhase.RENAMING
 
